@@ -1,4 +1,4 @@
-#import "@preview/polito-thesis:0.1.1" : polito-thesis
+#import "../0.1.0/lib.typ": polito-thesis, polito-black, polito-blue, polito-orange
 
 #show: polito-thesis.with(
   title: [Tesi di Laurea],
@@ -8,12 +8,15 @@
   graduation-session: "May 2026",
   student-name: "Mario Rossi",
   supervisors: ("Mario Rossi", "Maria Bianchi"),
-) 
+  cover-font: "Poppins",
+  heading-font: "Poppins",
+  text-font: "Libertinus Serif"
+)
 
 
 = How to use this package
 
-Please refer to this page on how to use Politecnico's image propertly and the suggested fonts:
+Please refer to this page on how to use Politecnico's image propertly and which are the suggested fonts (see below for more information about fonts):
 
 #show link: set text(fill: blue)
 #link("https://www.polito.it/ateneo/chi-siamo/immagine-coordinata-e-marchio")
@@ -31,10 +34,32 @@ Speficy the following fields:
 - `graduation-session`: Month and year of the graduation session
 - `for-print`: Optional, if `true` the left margin of the page will be increased to account for binding
 
+== Fonts
+
+Fonts for the following elements can be customized independently, for example:
+
+- `cover-font`: `"Poppins"`,
+- `heading-font`: `"Poppins"`,
+- `text-font`: `"Libertinus Serif"`
+
+*Refer to the following link to know how to install new fonts*:
+
+#link("https://typst.app/docs/reference/text/text/#parameters-font")
+
+== Colors
+
+You can import the default suggested colors from this same template as 
+- #text(`polito-black`, fill: polito-black) 
+- #text(`polito-blue`, fill: polito-blue)
+- #text(`polito-orange`, fill: polito-orange)
+
 == Example sub-chapter
 
 #lorem(40)
 
 === #lorem(10)
+#lorem(15)
 
 = Another chapter
+
+#lorem(500)

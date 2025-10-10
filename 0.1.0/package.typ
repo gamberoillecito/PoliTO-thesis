@@ -1,129 +1,152 @@
 #import "@preview/hydra:0.6.2": hydra
-#let need_fix = it => text(it, fill: red, weight: "bold")
+#let need-fix = it => text(it, fill: red, weight: "bold")
 
-#let polito_thesis(
-  title: need_fix("Your thesis title"),
+#let polito-blue = rgb("002B49")
+#let polito-black = rgb("000000")
+#let polito-orange = rgb("#EF7B00")
+
+#let polito-thesis(
+  title: need-fix("Your thesis title"),
   subtitle: none,
-  student_name: need_fix("Mark Reds"),
-  student_gender: none,
+  student-name: need-fix("Mark Reds"),
+  student-gender: none,
   lang: "en",
-  degree_name: need_fix("Your degree name"),
-  academic_year: need_fix("20xx/20xx"),
-  graduation_session: need_fix("month year"),
-  supervisors: (need_fix("Mary Whites"),),
-  for_print: false,
+  degree-name: need-fix("Your degree name"),
+  academic-year: need-fix("20xx/20xx"),
+  graduation-session: need-fix("month year"),
+  supervisors: (need-fix("Mary Whites"),),
+  for-print: false,
+  cover-font: "Century Gothic",
+  text-font: "Libertinus Serif",
+  heading-font: "Century Gothic",
   doc,
 ) = {
   // Set and show rules from before.
-  set text(lang: lang)
-  
+  set text(lang: lang, font: cover-font)
+
   set align(center)
-  v(6em)
-  image("polito.png", width: 60%)
-  v(2em)
-  text(25pt, "Politecnico di Torino", weight: "medium")
-  let academic_year_str = "A.a."
+  image("polito.png", width: 75mm)
+  v(10mm)
+  text(20pt, "Politecnico di Torino", weight: "medium")
+  v(3mm)
+  let academic-year-str = "A.a."
   if lang == "en" {
-    academic_year_str = "A.y."
+    academic-year-str = "A.y."
   }
   [
-    
+
     #set text(size: 14pt)
-    #degree_name
-    
-    #academic_year_str #academic_year
-    
-    #let session_str = "Sessione di laurea"
+    #degree-name
+
+    #academic-year-str #academic-year
+
+    #let session-str = "Sessione di laurea"
     #if lang == "en" {
-      session_str = "Graduation session"
+      session-str = "Graduation session"
     }
-    #session_str: #graduation_session
-  
+    #session-str: #graduation-session
+
   ]
-  v(4em)
-  
+  v(40mm)
+
   // Title
   box(
     width: 90%,
-    text(title, size: 20pt, weight: "bold"),
+    text(title, size: 24pt, weight: "bold", fill: polito-blue),
   )
-  v(0.5em)
+  v(2mm)
   text(subtitle, size: 14pt, weight: "medium")
-  
-  
+
+
   // Relatore IT
-  let supervisor_str = "Relator"
+  let supervisor-str = "Relator"
   if supervisors.len() == 1 {
-    supervisor_str += "e"
+    supervisor-str += "e"
   } else {
-    supervisor_str += "i"
+    supervisor-str += "i"
   }
   // Supervisor EN
   if lang == "en" {
-    supervisor_str = "Supervisor"
+    supervisor-str = "Supervisor"
     if supervisors.len() > 1 {
-      supervisor_str += "s"
+      supervisor-str += "s"
     }
   }
-  
+
   // Candidato IT
-  let student_str = "Candidat"
-  if (student_gender == "m") {
-    student_str += "o"
-  } else if (student_gender == "f") {
-    student_str += "a"
+  let student-str = "Candidat"
+  if (student-gender == "m") {
+    student-str += "o"
+  } else if (student-gender == "f") {
+    student-str += "a"
   } else {
-    student_str += "ə "
+    student-str += "ə "
   }
   // Candidate EN
   if lang == "en" {
-    student_str = "Candidate"
+    student-str = "Candidate"
   }
-  
-  v(3em)
+
   // Section for candidate and supervisors (two columns)
-  box(
-    columns(2, gutter: 10em, [
+  [
+  #set align(bottom)
+  #box(
+    columns(2, gutter: 0em, [
       #set align(left)
-      #text(supervisor_str + ":", weight: "bold")
-      #set align(right)
-      #{
-        for sup in supervisors {
-          [#sup \ ]
-        }
-      }
-      
-      
+      #move(
+        dx: -15mm,
+        text(supervisor-str + ":"),
+      )
+      #move(
+        dx: 10mm,
+        {
+          for sup in supervisors {
+            [#sup \ ]
+          }
+        },
+      )
+
+
       #colbreak()
       #set align(left)
-      #text(student_str + ":", weight: "bold")
-      #set align(right)
-      #student_name
-      
-    
+      #move(dx: 15mm, text(student-str + ":"))
+      #move(
+        dx: 40mm,
+        student-name,
+      )
+
+
     ]),
     width: 80%,
   )
-  
+  ]
+
   pagebreak()
   pagebreak()
   set align(left)
-  
+
+
+  // FONTS
+  set text(font: text-font, size: 12pt)
+  show heading: set text(font: heading-font)
+
   // Outline
   [
     #show heading: set text(size: 2em)
     #outline()
   ]
   pagebreak()
-  
-  let x_margin = 8em
-  let y_margin = 12em
-  // If for_print == true we increase the left margin of the page
-  let l_margin = x_margin
-  if for_print {
-    l_margin = 10em
+
+  let x-margin = 8em
+  let y-margin = 12em
+  // If for-print == true we increase the left margin of the page
+  let l-margin = x-margin
+  if for-print {
+    l-margin = 10em
   }
-  set page(paper: "a4", margin: (y: y_margin, left: l_margin, right: x_margin), numbering: "1", header: context {
+
+  // PAGE MARGINS
+  set page(paper: "a4", margin: (y: y-margin, left: l-margin, right: x-margin), numbering: "1", header: context {
     if calc.odd(here().page()) {
       align(right, emph(hydra(1)))
     } else {
@@ -131,31 +154,32 @@
     }
     line(length: 100%)
   })
-  set heading(numbering: "1.1")
+
+
   set par(justify: true)
-  
-  // Main heading
+
   set heading(numbering: "1.")
-  show heading.where(level: 1): set heading(supplement: if lang == "en" { [Chapter] } else { [Capitolo] })
+  show heading.where(level: 1): set heading(
+    supplement: 
+      if lang == "en" { [Chapter] } 
+      else { [Capitolo] })
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
     [
       #set text(size: 28pt)
-      #it.supplement #it.numbering
+      #it.supplement #counter(heading).display("1")
     ]
     set text(size: 30pt)
     v(0em)
     it.body
     v(0em)
   }
-  
+
   show heading.where(level: 2): it => {
     set text(size: 18pt)
     it
   }
-  
-  set text(size: 12pt)
-  
+
   doc
 }
 

@@ -1,1 +1,1 @@
-#import "package.typ": polito_thesis
+#import "package.typ": polito-thesis, polito-blue, polito-black, polito-orange
