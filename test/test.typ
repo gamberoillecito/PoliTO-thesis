@@ -1,4 +1,4 @@
-#import "../0.1.0/lib.typ": polito-thesis, polito-black, polito-blue, polito-orange
+#import "../0.1.1/lib.typ": polito-thesis, polito-black, polito-blue, polito-orange
 
 #show: polito-thesis.with(
   title: [Tesi di Laurea],
