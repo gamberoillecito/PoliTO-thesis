@@ -1,4 +1,4 @@
-#import "../0.1.1/lib.typ": polito-thesis, polito-black, polito-blue, polito-orange
+#import "../0.1.2/lib.typ": polito-black, polito-blue, polito-orange, polito-thesis
 
 #show: polito-thesis.with(
   title: [Tesi di Laurea],
@@ -10,9 +10,9 @@
   supervisors: ("Mario Rossi", "Maria Bianchi"),
   cover-font: "Poppins",
   heading-font: "Poppins",
-  text-font: "Libertinus Serif"
+  text-font: "Libertinus Serif",
+  bibliography: bibliography("test.bib"),
 )
-
 
 = How to use this package
 
@@ -20,6 +20,8 @@ Please refer to this page on how to use Politecnico's image propertly and which 
 
 #show link: set text(fill: blue)
 #link("https://www.polito.it/ateneo/chi-siamo/immagine-coordinata-e-marchio")
+
+*By default mandatory missing fields of the cover page will default to a red warning. In case you want to remove the whole field (for example you do not want to show the graduation session) you can set it to `none` (e.g. `graduation-session: none`)*
 
 Speficy the following fields:
 
@@ -31,8 +33,9 @@ Speficy the following fields:
 - `degree-name`: Name of your degree
 - `supervisors`: List of the supervisors (relatori), must always be a list even if there is a single name. For example `("Mario Rossi", )`
 - `academic-year`: "20xx/20xx"
-- `graduation-session`: Month and year of the graduation session
+- `graduation-session`: Month and year of the graduation session. Set this to `none` to remove this line from the cover.
 - `for-print`: Optional, if `true` the left margin of the page will be increased to account for binding
+- `bibliography`: Optional, result of the `bibliography()` function of typst, this allows proper stilying of the bibliography.
 
 == Fonts
 
@@ -48,14 +51,14 @@ Fonts for the following elements can be customized independently, for example:
 
 == Colors
 
-You can import the default suggested colors from this same template as 
-- #text(`polito-black`, fill: polito-black) 
+You can import the default suggested colors from this same template as
+- #text(`polito-black`, fill: polito-black)
 - #text(`polito-blue`, fill: polito-blue)
 - #text(`polito-orange`, fill: polito-orange)
 
 == Example sub-chapter
 
-#lorem(40)
+#lorem(40) @andersonTheoryDirtySuperconductors1959
 
 === #lorem(10)
 #lorem(15)

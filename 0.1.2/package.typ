@@ -8,17 +8,18 @@
 #let polito-thesis(
   title: need-fix("Your thesis title"),
   subtitle: none,
-  student-name: need-fix("Mark Reds"),
+  student-name: need-fix("Student Name"),
   student-gender: none,
   lang: "en",
   degree-name: need-fix("Your degree name"),
   academic-year: need-fix("20xx/20xx"),
   graduation-session: need-fix("month year"),
-  supervisors: (need-fix("Mary Whites"),),
+  supervisors: (need-fix("Name Surname"),),
   for-print: false,
   cover-font: "Century Gothic",
   text-font: "Libertinus Serif",
   heading-font: "Century Gothic",
+  bibliography: none,
   doc,
 ) = {
   // Set and show rules from before.
@@ -36,15 +37,21 @@
   [
 
     #set text(size: 14pt)
-    #degree-name
+    #if degree-name != none {
+      degree-name
+    }
 
-    #academic-year-str #academic-year
+    #if academic-year != none {
+      [#academic-year-str #academic-year]
+    }
 
     #let session-str = "Sessione di laurea"
     #if lang == "en" {
       session-str = "Graduation session"
     }
-    #session-str: #graduation-session
+    #if graduation-session != none {
+      [#session-str: #graduation-session]
+    }
 
   ]
   v(40mm)
@@ -60,7 +67,7 @@
 
   // Relatore IT
   let supervisor-str = "Relator"
-  if supervisors.len() == 1 {
+  if supervisors != none and supervisors.len() == 1 {
     supervisor-str += "e"
   } else {
     supervisor-str += "i"
@@ -68,7 +75,7 @@
   // Supervisor EN
   if lang == "en" {
     supervisor-str = "Supervisor"
-    if supervisors.len() > 1 {
+    if supervisors != none and supervisors.len() > 1 {
       supervisor-str += "s"
     }
   }
@@ -89,36 +96,41 @@
 
   // Section for candidate and supervisors (two columns)
   [
-  #set align(bottom)
-  #box(
-    columns(2, gutter: 0em, [
-      #set align(left)
-      #move(
-        dx: -15mm,
-        text(supervisor-str + ":"),
-      )
-      #move(
-        dx: 10mm,
-        {
-          for sup in supervisors {
-            [#sup \ ]
-          }
-        },
-      )
+    #set align(bottom)
+    #box(
+      columns(2, gutter: 0em, [
+        #if supervisors != none {
+          set align(left)
+          move(
+            dx: -15mm,
+            text(supervisor-str + ":"),
+          )
+          move(
+            dx: 10mm,
+            {
+              for sup in supervisors {
+                [#sup \ ]
+              }
+            },
+          )
+        }
 
 
-      #colbreak()
-      #set align(left)
-      #move(dx: 15mm, text(student-str + ":"))
-      #move(
-        dx: 40mm,
-        student-name,
-      )
+        #colbreak()
+        #if student-name != none {
+
+        set align(left)
+        move(dx: 15mm, text(student-str + ":"))
+        move(
+          dx: 40mm,
+          student-name,
+        )
+        }
 
 
-    ]),
-    width: 80%,
-  )
+      ]),
+      width: 80%,
+    )
   ]
 
   pagebreak()
@@ -160,9 +172,9 @@
 
   set heading(numbering: "1.")
   show heading.where(level: 1): set heading(
-    supplement: 
-      if lang == "en" { [Chapter] } 
-      else { [Capitolo] })
+    supplement: if lang == "en" { [Chapter] } else { [Capitolo] },
+  )
+
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
     [
@@ -180,6 +192,25 @@
     it
   }
 
+  show heading.where(level: 1): it => {
+    pagebreak(weak: true)
+    [
+      #set text(size: 28pt)
+      #it.supplement #counter(heading).display("1")
+    ]
+    set text(size: 30pt)
+    v(0em)
+    it.body
+    v(0em)
+  }
   doc
+  {
+    show heading.where(level: 1): it => {
+      pagebreak(weak: true)
+      set text(size: 30pt)
+      it.body
+    }
+    bibliography
+  }
 }
 
