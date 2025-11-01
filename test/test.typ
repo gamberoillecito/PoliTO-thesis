@@ -16,7 +16,7 @@
 
 = How to use this package
 
-Please refer to this page on how to use Politecnico's image propertly and which are the suggested fonts (see below for more information about fonts):
+Please refer to this page on how to use Politecnico's image propertly, which are the suggested fonts and where to download them (see below for more information about using different fonts in typst):
 
 #show link: set text(fill: blue)
 #link("https://www.polito.it/ateneo/chi-siamo/immagine-coordinata-e-marchio")
